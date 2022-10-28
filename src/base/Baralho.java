@@ -1,5 +1,8 @@
 package base;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -11,11 +14,13 @@ import cartas.Cor;
 
 /**
  * Representa a abstração de um conjunto de cartas
- * 
+ *
  * @author luciano.silva
  *
  */
 public class Baralho {
+	private static final Logger LOGGER = LoggerFactory.getLogger(Baralho.class);
+
 	public static final boolean NORMAL = false;
 	public static final boolean INICIAL = true;
 
@@ -28,6 +33,8 @@ public class Baralho {
 	 *             demais tipos de baralho.
 	 */
 	public Baralho(boolean tipo) {
+		LOGGER.info("Criando baralho.");
+
 		this.tipo = tipo;
 		if (tipo == Baralho.INICIAL) {
 			gerarCartas();
@@ -40,6 +47,8 @@ public class Baralho {
 	 * Esse método somente será chamado quando o baralho criado for do tipo inicial.
 	 */
 	public void gerarCartas() {
+		LOGGER.info("Gerando cartas.");
+
 		for (int i = 0; i < 2; i++) {
 			for (int n = 0; n < 10; n++) {
 				cartas.add(new CartaNormal(Cor.AMARELO, n));
@@ -76,6 +85,7 @@ public class Baralho {
 	 * Esse método somente será chamado quando o baralho criado for do tipo inicial.
 	 */
 	public void embaralhar() {
+		LOGGER.info("Embaralhando cartas.");
 		Collections.shuffle(cartas);
 	}
 
@@ -84,6 +94,7 @@ public class Baralho {
 	 * @return a primeira carta do baralho
 	 */
 	public Carta comprarCarta() {
+		LOGGER.info("Comprando cartas");
 		return this.cartas.remove(0);
 	}
 
@@ -92,6 +103,7 @@ public class Baralho {
 	 * @param c a carta.
 	 */
 	public void receberCarta(Carta c) {
+		LOGGER.info("Recebendo cartas");
 		this.cartas.add(c);
 	}
 	
@@ -100,8 +112,8 @@ public class Baralho {
 	 * @return o tamanhho do arraylist cartas
 	 */
 	public int quantCarta() { // para verificar a quantidade de cartas
+		LOGGER.info("Quantidade de cartas: " + this.cartas.size());
 		return this.cartas.size();
-
 	}
 	
 	/**
@@ -109,14 +121,15 @@ public class Baralho {
 	 * @return a última carta do baralho
 	 */
 	public Carta ultimaCarta() { // para verificar a última carta
+		LOGGER.info("Última carta: " + this.cartas.get(this.cartas.size() - 1));
 		return cartas.get(quantCarta() - 1);
-
 	}
 
 	/**
 	 * @return the baralho
 	 */
 	public ArrayList<Carta> getCartas() {
+		LOGGER.info("Pegando as cartas do baralho.");
 		return cartas;
 	}
 
@@ -124,6 +137,7 @@ public class Baralho {
 	 * @param cartas the baralho to set
 	 */
 	public void setCartas(ArrayList<Carta> cartas) {
+		LOGGER.info("Adcionando as cartas recebidas no array de cartas.");
 		this.cartas = cartas;
 	}
 
@@ -131,6 +145,7 @@ public class Baralho {
 	 * @return the tipo
 	 */
 	public boolean isTipo() {
+		LOGGER.info("Retornando o tipo do baralho.");
 		return tipo;
 	}
 
