@@ -24,7 +24,7 @@ public class Baralho {
 	public static final boolean NORMAL = false;
 	public static final boolean INICIAL = true;
 
-	private ArrayList<Carta> cartas = new ArrayList<>();
+	protected ArrayList<Carta> cartas = new ArrayList<>();
 	private boolean tipo;
 
 	/**
@@ -40,15 +40,13 @@ public class Baralho {
 			gerarCartas();
 			embaralhar();
 		}
-
 	}
 
 	/**
 	 * Esse método somente será chamado quando o baralho criado for do tipo inicial.
 	 */
 	public void gerarCartas() {
-		LOGGER.info("Gerando cartas.");
-
+		LOGGER.info("Gerando cartas normais. (4 de cada cor).");
 		for (int i = 0; i < 2; i++) {
 			for (int n = 0; n < 10; n++) {
 				cartas.add(new CartaNormal(Cor.AMARELO, n));
@@ -58,6 +56,7 @@ public class Baralho {
 			}
 		}
 
+		LOGGER.info("Gerando cartas especiais. (2 de cada cor).");
 		for (int i = 0; i < 2; i++) {
 			cartas.add(new CartaEspecialComCor(Cor.AMARELO, Carta.MAIS2));
 			cartas.add(new CartaEspecialComCor(Cor.AZUL, Carta.MAIS2));
@@ -75,6 +74,7 @@ public class Baralho {
 			cartas.add(new cartas.CartaEspecialComCor(Cor.AMARELO, Carta.BLOQ));
 		}
 
+		LOGGER.info("Gerando cartas especiais sem cor. (4 MAIS4 e 4 TROCACOR).");
 		for (int i = 0; i < 4; i++) {
 			cartas.add(new CartaEspecialSemCor(Carta.MAIS4));
 			cartas.add(new CartaEspecialSemCor(Carta.TROCACOR));
@@ -87,6 +87,7 @@ public class Baralho {
 	public void embaralhar() {
 		LOGGER.info("Embaralhando cartas.");
 		Collections.shuffle(cartas);
+		LOGGER.info("{} Cartas embaralhadas.", cartas);
 	}
 
 	/**
@@ -94,8 +95,9 @@ public class Baralho {
 	 * @return a primeira carta do baralho
 	 */
 	public Carta comprarCarta() {
-		LOGGER.info("Comprando cartas");
-		return this.cartas.remove(0);
+		Carta cartaComprada = cartas.remove(0);
+		LOGGER.info("Carta comprada: {}", cartaComprada);
+		return cartaComprada;
 	}
 
 	/**
@@ -103,7 +105,7 @@ public class Baralho {
 	 * @param c a carta.
 	 */
 	public void receberCarta(Carta c) {
-		LOGGER.info("Recebendo cartas");
+		LOGGER.info("Recebendo e adicionando a carta: {} no baralho", c);
 		this.cartas.add(c);
 	}
 	
@@ -112,7 +114,10 @@ public class Baralho {
 	 * @return o tamanhho do arraylist cartas
 	 */
 	public int quantCarta() { // para verificar a quantidade de cartas
-		LOGGER.info("Quantidade de cartas: " + this.cartas.size());
+		if LOGGER.isDebugEnable() {
+			LOGGER.debug("Quantidade de cartas retornada: {}", cartas.size());
+		}
+
 		return this.cartas.size();
 	}
 	
@@ -121,7 +126,10 @@ public class Baralho {
 	 * @return a última carta do baralho
 	 */
 	public Carta ultimaCarta() { // para verificar a última carta
-		LOGGER.info("Última carta: " + this.cartas.get(this.cartas.size() - 1));
+		if LOGGER.isDebugEnable() {
+			LOGGER.debug("Última carta retornada: {}", cartas.get(cartas.size() - 1));
+		}
+
 		return cartas.get(quantCarta() - 1);
 	}
 
@@ -129,7 +137,10 @@ public class Baralho {
 	 * @return the baralho
 	 */
 	public ArrayList<Carta> getCartas() {
-		LOGGER.info("Pegando as cartas do baralho.");
+		if LOGGER.isDebugEnable() {
+			LOGGER.debug("Cartas retornadas: {}", cartas);
+		}
+
 		return cartas;
 	}
 
@@ -137,7 +148,8 @@ public class Baralho {
 	 * @param cartas the baralho to set
 	 */
 	public void setCartas(ArrayList<Carta> cartas) {
-		LOGGER.info("Adcionando as cartas recebidas no array de cartas.");
+		LOGGER.info("Cartas setadas: {}", cartas);
+
 		this.cartas = cartas;
 	}
 
@@ -145,7 +157,10 @@ public class Baralho {
 	 * @return the tipo
 	 */
 	public boolean isTipo() {
-		LOGGER.info("Retornando o tipo do baralho.");
+		if LOGGER.isDebugEnable() {
+			LOGGER.debug("Tipo retornado: {}", tipo);
+		}
+
 		return tipo;
 	}
 
