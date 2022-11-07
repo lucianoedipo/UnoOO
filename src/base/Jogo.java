@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import acao.Acao;
 import base.jogador.Jogador;
 
 /**
@@ -48,7 +47,8 @@ public class Jogo {
 	 * ganhador se for o caso
 	 * 
 	 * @see Mao.java
-	 * @return tipo booleano: caso falso ele encerra o jogo, pois o jogador já não possui mais cartas e verdadeiro o jogo continua
+	 * @return tipo booleano: caso falso ele encerra o jogo, pois o jogador já não
+	 *         possui mais cartas e verdadeiro o jogo continua
 	 */
 	public boolean confereFim(Jogador jogadorAtual) {
 		if (jogadorAtual.getQuantidadeCartas() == 0) {
@@ -59,20 +59,21 @@ public class Jogo {
 	}
 
 	/**
-	 * função que faz a execução do jogo
-	 * descreve o turno em si, com a troca de jogador e jogada
-	 * em sua última ação confere se a quantidade de cartas na mão do jogador é diferente de zero
-	 * Logger retorna as ações realizadas peo Jogador
+	 * função que faz a execução do jogo descreve o turno em si, com a troca de
+	 * jogador e jogada em sua última ação confere se a quantidade de cartas na mão
+	 * do jogador é diferente de zero Logger retorna as ações realizadas peo Jogador
+	 * 
 	 * @see Jogador.java
 	 * @see Roda.java
 	 */
 	public void run() {
+		int qtdRodadas = 0;
 		while (true) {
 
 			/**
 			 * define o próximo jogador
 			 */
-			LOGGER.info("Alterando para próximo jogador");
+			LOGGER.trace("Alterando para próximo jogador");
 			jogadorAtual = roda.jogadorDaVez();
 			/**
 			 * Jogador atual realiza a jogada (entra em contato com a roda para ver se há
@@ -80,10 +81,11 @@ public class Jogo {
 			 * 
 			 * @see Jogador.java
 			 */
-			LOGGER.info("Jogador realizando jogada");
+			LOGGER.trace("{} realizando jogada", jogadorAtual);
 			jogadorAtual.realizarJogada();
+			System.out.println("Rodada:"+qtdRodadas++);
 
-			LOGGER.info("Conferindo se acabou as cartas na mão do jogador");
+			LOGGER.trace("Conferindo se acabou as cartas na mão do jogador");
 			if (confereFim(jogadorAtual) == false) {
 				System.out.printf("O jogador %S ganhou.",
 						jogadorAtual.getNome()); /* printar o jogador que ficou sem cartas na mão */
@@ -92,6 +94,7 @@ public class Jogo {
 
 		}
 	}
+
 	/**
 	 * Método toString()
 	 */
@@ -101,8 +104,9 @@ public class Jogo {
 	}
 
 	/**
-	 * construtor da classe Jogo,
-	 * chama os jogadores e prepara o jogo conforme a função prepararJogo
+	 * construtor da classe Jogo, chama os jogadores e prepara o jogo conforme a
+	 * função prepararJogo
+	 * 
 	 * @see Jogo.java
 	 */
 	public Jogo(ArrayList<Jogador> j) {

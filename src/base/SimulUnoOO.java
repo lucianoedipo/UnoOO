@@ -31,25 +31,29 @@ public class SimulUnoOO {
 
 		LOGGER.info("Criando jogadores");
 
-		criarJogadores(15);
+		criarJogadores(2);
 		partida = new Jogo(jogadores);
-		Baralho b = partida.roda.getCompra();
+		System.out.println("Iniciando Partida!");
+		partida.run();
 
-		for (Carta c : b.getCartas()) {
-			System.out.println(c);
+	}
 
-		}
-		LOGGER.info("Há {} no baralho de compras da roda", b.getCartas().size());
-		LOGGER.info("Carta Inicial: {}", partida.roda.getUltimaCarta());
-
-		for (Jogador j : partida.roda.getJogadores()) {
+	public static void testVerificarJogadores() {
+		for (Jogador j : Jogo.roda.getJogadores()) {
 			LOGGER.info("{} tem {} Cartas:", j.getNome(), j.getQuantidadeCartas());
 			for (Carta c : j.getMaoJogador().getCartas()) {
 				System.out.println(c);
-
 			}
-
 		}
+	}
+
+	public static void testPrepararRoda() {
+		Baralho b = Jogo.roda.getCompra();
+		for (Carta c : b.getCartas()) {
+			System.out.println(c);
+		}
+		LOGGER.info("Há {} no baralho de compras da roda", b.getCartas().size());
+		LOGGER.info("Carta Inicial: {}", Jogo.roda.getUltimaCarta());
 	}
 
 	public static void criarJogadores(int nJogadores) {
