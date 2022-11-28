@@ -1,13 +1,18 @@
 package base.jogador;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cartas.*;
 import base.Jogo;
+import base.Roda;
+import cartas.Carta;
+import cartas.CartaComCor;
+import cartas.CartaEspecialComCor;
+import cartas.CartaEspecialSemCor;
+import cartas.CartaNormal;
+import cartas.Cor;
 
 public class JogadorJogador extends Jogador{
     protected static final Logger LOGGER = LoggerFactory.getLogger(JogadorJogador.class);

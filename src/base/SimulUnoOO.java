@@ -5,12 +5,18 @@ package base;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import base.jogador.Jogador;
-import cartas.Carta;
+import base.jogador.JogadorBaralho;
+import base.jogador.JogadorCarta;
+import base.jogador.JogadorJogador;
+import base.jogador.JogadorJogo;
+import base.jogador.JogadorRoda;
 
 /**
  * @author Luciano
@@ -23,34 +29,58 @@ public class SimulUnoOO {
 					"Andoria", "Bajor", "Kaminar", "Midos", "Pacifica", "Kronos", "Risa"));
 	private static ArrayList<Jogador> jogadores;
 	private static Jogo partida;
+	private static Dictionary<String, Integer> contagem = new Hashtable<String, Integer>();
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		contagem.put("Baralho", 0);
+		contagem.put("Jogador", 0);
+		contagem.put("Roda", 0);
+		contagem.put("Ação", 0);
+		contagem.put("Carta", 0);
+		contagem.put("Jogo", 0);
 
-		LOGGER.info("Criando jogadores");
-
-		criarJogadores(15);
-		partida = new Jogo(jogadores);
-		Baralho b = partida.roda.getCompra();
-
-		for (Carta c : b.getCartas()) {
-			System.out.println(c);
+		int i = 1000;
+		try {
+			i = Integer.parseInt(args[0]);
+		} catch (Exception e) {
+			System.out.println("Sem argumento: Simulando com 1000");
+		} finally {
+			simular(i);
+			System.out.println(contagem);
 
 		}
-		LOGGER.info("Há {} no baralho de compras da roda", b.getCartas().size());
-		LOGGER.info("Carta Inicial: {}", partida.roda.getUltimaCarta());
 
-		for (Jogador j : partida.roda.getJogadores()) {
-			LOGGER.info("{} tem {} Cartas:", j.getNome(), j.getQuantidadeCartas());
-			for (Carta c : j.getMaoJogador().getCartas()) {
-				System.out.println(c);
+	}
 
+	private static void simular(int n) {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < n; i++) {
+			String ganhador = "ERROR";
+			int qg = 0;
+			criarJogadores();
+			partida = new Jogo(jogadores);
+			try {
+				ganhador = partida.run();
+			} finally {
+				qg = contagem.get(ganhador);
+				qg++;
+				contagem.put(ganhador, qg);
 			}
-
 		}
-		partida.run();
+	}
+
+	private static void criarJogadores() {
+		// TODO Auto-generated method stub
+		jogadores = new ArrayList<>();
+		jogadores.add(new JogadorBaralho("Baralho"));
+		jogadores.add(new JogadorJogador("Jogador"));
+		jogadores.add(new JogadorRoda("Roda"));
+		jogadores.add(new Jogador("Ação"));// Não Implementou reliazarJogada()
+		jogadores.add(new JogadorCarta("Carta"));
+		jogadores.add(new JogadorJogo("Jogo"));
 	}
 
 	public static void criarJogadores(int nJogadores) {
