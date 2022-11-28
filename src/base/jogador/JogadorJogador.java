@@ -95,9 +95,9 @@ public class JogadorJogador extends Jogador{
     {
     	Carta ultimo = Jogo.roda.getUltimaCarta();
         Cor corEscolhida = Jogo.roda.getCorEscolhida();    	
-
+        Cor maiorCor = this.maiorCor();
         // Busca cartas normais
-        Carta cartaComMesmoNumero = null;
+        CartaNormal cartaComMesmoNumero = null;
     	for(Carta c : this.getMaoJogador().getCartas())
     	{
     		if(!(c instanceof CartaNormal))
@@ -112,9 +112,10 @@ public class JogadorJogador extends Jogador{
     		// Se for o mesmo número também pode jogar
             
     		if(ultimo instanceof CartaNormal && ((CartaNormal)ultimo).getNumero() == cn.getNumero()){
-                if(cn.getCor() == this.maiorCor())
+                if(maiorCor == null || cn.getCor() == maiorCor){
                     return c;
-                cartaComMesmoNumero = c;
+                }
+                cartaComMesmoNumero = (CartaNormal)cn;
             }
         
     	}
