@@ -264,7 +264,7 @@ public class Jogador {//implements Jogada{
     		CartaNormal cn = (CartaNormal)c;
     		
     		// Se for a mesma cor pode jogar
-    		if(cn.getCor() == ultimo.getCor() || (ultimo instanceof CartaEspecialSemCor && cn.getCor() == corEscolhida))
+    		if((ultimo instanceof CartaEspecialSemCor && cn.getCor() == corEscolhida) || cn.getCor() == ultimo.getCor())
     			return c;
     		
     		// Se for o mesmo número também pode jogar
