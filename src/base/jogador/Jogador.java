@@ -174,7 +174,6 @@ public class Jogador {//implements Jogada{
     public Jogada realizarJogada(){
         LOGGER.trace("Jogador {} realizando jogada", this.getNome());
         Carta carta = null;
-        Jogada jogadaRealizada = null;
         if(Jogo.roda.temAcumulo()){
             try{
                 carta = defineCartaParaAcumulo(Jogo.roda.getUltimaCarta().getAcao());
@@ -185,13 +184,13 @@ public class Jogador {//implements Jogada{
             if(carta == null){
                 LOGGER.trace("Jogador {} comprando acúmulo", this.getNome());
                 comprarCartasAcumuladas(Jogo.roda.desacumular());
-                jogadaRealizada = Jogada.COMPRAR_ACUMULADO;
                 LOGGER.info("Jogador {} comprou acúmulo. Ficou com {} cartas", this.getNome(), this.getQuantidadeCartas());
+                return Jogada.COMPRAR_ACUMULADO;
 
             }else{
                 descartar(carta);
                 LOGGER.info("Jogador {} descartou {} para o acúmulo", this.getNome(), carta.toString());
-                jogadaRealizada = Jogada.DESCARTAR;
+                return Jogada.DESCARTAR;
             }
         }else{
             carta = defineCartaDaJogada();
@@ -205,16 +204,16 @@ public class Jogador {//implements Jogada{
                         LOGGER.error("ERRO: Carta não possui acao!");
                     }
                 }
+                
                 descartar(carta);
-                jogadaRealizada = Jogada.DESCARTAR;
+                return Jogada.DESCARTAR;
 
             }else{
-                LOGGER.info("Jogador {} precisou comprar uma carta", this.getNome());
             	Jogo.roda.comprar(1, this);
-                jogadaRealizada = Jogada.COMPRAR;
+                LOGGER.info("Jogador {} precisou comprar uma carta", this.getNome());
+                return Jogada.COMPRAR;
             }
         }
-        return jogadaRealizada;
     }
     
     /**
@@ -235,6 +234,7 @@ public class Jogador {//implements Jogada{
     protected Carta defineCartaDaJogada()
     {
     	Carta ultimo = Jogo.roda.getUltimaCarta();
+        Cor corEscolhida = Jogo.roda.getCorEscolhida();
     	/*
     	 * Sequência de uso das cartas:
 
@@ -249,7 +249,7 @@ public class Jogador {//implements Jogada{
     		CartaEspecialComCor ca = (CartaEspecialComCor)c;
     		
     		// Verifica se é a mesma cor ou se é a mesma ação pra poder jogar
-    		if(ca.getCor() == ultimo.getCor() || (ultimo instanceof CartaEspecialComCor && ca.getAcao() == ((CartaEspecialComCor)ultimo).getAcao()))
+    		if( (ultimo instanceof CartaEspecialSemCor && ca.getCor() == corEscolhida) || ca.getCor() == ultimo.getCor() || (ultimo instanceof CartaEspecialComCor && ca.getAcao() == ((CartaEspecialComCor)ultimo).getAcao()))
     		{
     			return ca;
     		}
@@ -264,7 +264,7 @@ public class Jogador {//implements Jogada{
     		CartaNormal cn = (CartaNormal)c;
     		
     		// Se for a mesma cor pode jogar
-    		if(cn.getCor() == ultimo.getCor())
+    		if(cn.getCor() == ultimo.getCor() || (ultimo instanceof CartaEspecialSemCor && cn.getCor() == corEscolhida))
     			return c;
     		
     		// Se for o mesmo número também pode jogar
