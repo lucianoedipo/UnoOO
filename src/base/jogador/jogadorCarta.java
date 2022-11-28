@@ -4,7 +4,6 @@ import acao.*;
 import base.*;
 import cartas.*;
 
-import java.io.PrintStream;
 import java.util.ArrayList;
 
 
@@ -27,7 +26,9 @@ public class jogadorCarta extends Jogador{
         LOGGER.info("Carta adicionada: {}", carta.toString());
     }*/
 	
-	public Cor CorEscolhida() {
+	public Cor CorEscolhida() { 
+		
+		//System.out.println(this.maoJogador);
 		
 		ArrayList<Integer> qtdCor = new ArrayList<>();
 		
@@ -36,8 +37,9 @@ public class jogadorCarta extends Jogador{
 		qtdCor.add(0); //Verde pos 2
 		qtdCor.add(0); //Vermelho pos 3
 		
-		
-		for(Carta c: this.getMaoJogador().getCartas()) {
+	    
+	  
+		for(Carta c: this.maoJogador.getCartas()) {
 			
 			if(c instanceof CartaComCor) {
 				
@@ -66,6 +68,7 @@ public class jogadorCarta extends Jogador{
 			
 			
 		}
+		
 		
 		//Parte de decidir a cor, com base no for it de cima
 		
@@ -102,8 +105,6 @@ public class jogadorCarta extends Jogador{
 	//Parte de escolher a cor, agora, sem sem aleatório
 	
     public Cor sorteiaCor(){
-    	
-    	//System.out.println("Entrou");
      
         Cor corSorteada = CorEscolhida();
         LOGGER.trace("Cor escolhida: {}", corSorteada);
@@ -112,133 +113,69 @@ public class jogadorCarta extends Jogador{
     
     
     //Parte de Definir Carta da Jogada
-    
-    protected Carta defineCartaDaJogada()
-{    
+   
+ protected Carta defineCartaDaJogada(){    
     	
-        Jogador DaVez;
-        Carta ultimo = Jogo.roda.getUltimaCarta();
-		//System.out.print(Jogo.roda.jogadorDaVez()); //tem que fazer andar
         
-        ArrayList<Jogador> CopiaJogadores = Jogo.roda.getJogadores();
-        
-        try {
-        
-           DaVez = CopiaJogadores.get(Jogo.roda.getPosicaoAtual()+1);// Pegando o próximo jogador
-        
-		         if(DaVez.getQuantidadeCartas() <= 3) {
-		    		
-		    		// Busca +4 e troca cor
-		        	for(Carta c : this.getMaoJogador().getCartas())
-		        	{
-		        		if(!(c instanceof CartaEspecialSemCor))
-		        			continue;
-		        		
-		        		// +4 e troca cor pode ser jogado de qualquer forma
-		        		return c;
-		        	}
-		        	
-		        	// Busca bloqueio, reverso e +2
-		        	for(Carta c : this.getMaoJogador().getCartas())
-		        	{
-		        		if(!(c instanceof CartaEspecialComCor))
-		        			continue;
-		        		
-		        		CartaEspecialComCor ca = (CartaEspecialComCor)c;
-		        		
-		        		// Verifica se é a mesma cor ou se é a mesma ação pra poder jogar
-		        		if(ca.getCor() == ultimo.getCor() || (ultimo instanceof CartaEspecialComCor && ca.getAcao() == ((CartaEspecialComCor)ultimo).getAcao()))
-		        		{
-		        			return ca;
-		        		}
-		        	}
-		        	
-		        	//Tentando fazer com que seja escolhida a cor de maior quantidade; 
-		        	
-		        	Cor MelhorCorDescarte = CorEscolhida();
-		        	
-		        	for(Carta c : this.getMaoJogador().getCartas()) {
-		        		
-		        		if(!(c instanceof CartaNormal))
-		        			continue;
-		        		
-		        		if(c.getCor() != MelhorCorDescarte) {
-		        			continue;
-		        			
-		        		}else {
-		        			CartaNormal cn = (CartaNormal)c;
-		        			
-		        			// Se for a mesma cor pode jogar
-		            		if(cn.getCor() == ultimo.getCor())
-		            			return c;
-		            		
-		            		// Se for o mesmo número também pode jogar
-		            		if(ultimo instanceof CartaNormal && ((CartaNormal)ultimo).getNumero() == cn.getNumero())
-		            			return c;
-		            	  }
-		        			
-		        	}//Fecha melhor opção de carte
-		        	
-		        	
-		        	// Busca cartas normais caso algo de errado no de cima 
-		        	for(Carta c : this.getMaoJogador().getCartas())
-		        	{
-		        		
-		        		
-		        		if(!(c instanceof CartaNormal))
-		        			continue;
-		        		
-		        		CartaNormal cn = (CartaNormal)c;
-		        		
-		        		
-		        		// Se for a mesma cor pode jogar
-		        		if(cn.getCor() == ultimo.getCor())
-		        			return c;
-		        		
-		        		// Se for o mesmo número também pode jogar
-		        		if(ultimo instanceof CartaNormal && ((CartaNormal)ultimo).getNumero() == cn.getNumero())
-		        			return c;
-		        	}
-		        	
-		        	
-		        	return null;
-		        	
-		        	
-		        		
-		  		
-		        		
-		        }// Proximo J <=3
-        		
-        //System.out.print(DaVez); 
-        
-        }catch(IndexOutOfBoundsException exception) {
-        	//Pensar na correção 
-        }
+        Carta ultimo = Jogo.roda.getUltimaCarta();   
 		
-    		
-    	
     	//Tentando fazer com que seja escolhida a cor de maior quantidade; 
     	
-    	Cor MelhorCorDescarte = CorEscolhida();
+    	Cor MelhorCorDescarte = CorEscolhida(); 
     	
-    	for(Carta c : this.getMaoJogador().getCartas()) {
+    	//Implementação nova, considerando o problema relatado pelo Matheus 
+    	// Criando uma Variável para cada atributo de carta 
+    	
+    	Cor corUltimaCarta = ultimo.getCor(); //Até pega a cor, exeto se for +4 ou TROCACOR 
+    	
+    	if(ultimo instanceof CartaEspecialSemCor ) { //Considera o +4 ou TROCAR
+    		corUltimaCarta = Jogo.roda.getCorEscolhida();
+    	}
+    	
+    	
+    	int nUltimaCarta = -1;
+    	try {
+    		 nUltimaCarta = ultimo.getNumero();
+    	
+    	}catch (CartaSemNumero e) {
+    		LOGGER.trace("Esta carta {} não possui número", ultimo);
+    		
+    	}
+    	
+    	
+    	Acao acaoUltimaCarta = null; 
+    	try {
+    		 acaoUltimaCarta = ultimo.getAcao();
+    	
+    	}catch (CartaSemAcao e) {
+    		LOGGER.trace("Esta carta {} não possui ação", ultimo);
+    	}
+    	
+    	
+    	// Alterando considerando as váriaiveis 
+    	for(Carta c : this.maoJogador.getCartas()) {
     		
     		if(!(c instanceof CartaNormal))
     			continue;
     		
     		if(c.getCor() != MelhorCorDescarte) {
+    			//System.out.println(this.getMaoJogador().getCartas());
     			continue;
     			
     		}else {
     			CartaNormal cn = (CartaNormal)c;
     			
     			// Se for a mesma cor pode jogar
-        		if(cn.getCor() == ultimo.getCor())
+        		if(cn.getCor() == corUltimaCarta) {
+        			//System.out.println("Entrou no certo deste");
         			return c;
-        		
+        		}
         		// Se for o mesmo número também pode jogar
-        		if(ultimo instanceof CartaNormal && ((CartaNormal)ultimo).getNumero() == cn.getNumero())
+        		if(ultimo instanceof CartaNormal && nUltimaCarta == cn.getNumero()) {
+        			//System.out.println("Entrou no certo deste");
         			return c;
+        		}
+        			
         	  }
     			
     	}//Fecha melhor opção de carta
@@ -246,10 +183,10 @@ public class jogadorCarta extends Jogador{
         	
         	
         	// Busca cartas normais caso algo de errado 
-        	for(Carta c : this.getMaoJogador().getCartas())
+        	for(Carta c : this.maoJogador.getCartas())
         	{
         		
-        		
+        		//System.out.println("Entrou aqui");
         		if(!(c instanceof CartaNormal))
         			continue;
         		
@@ -257,18 +194,18 @@ public class jogadorCarta extends Jogador{
         		
         		
         		// Se for a mesma cor pode jogar
-        		if(cn.getCor() == ultimo.getCor())
+        		if(cn.getCor() == corUltimaCarta)
         			return c;
         		
         		// Se for o mesmo número também pode jogar
-        		if(ultimo instanceof CartaNormal && ((CartaNormal)ultimo).getNumero() == cn.getNumero())
+        		if(ultimo instanceof CartaNormal && nUltimaCarta == cn.getNumero())
         			return c;
         	}
         	
   
     	
     	// Busca bloqueio, reverso e +2
-    	for(Carta c : this.getMaoJogador().getCartas())
+    	for(Carta c : this.maoJogador.getCartas())
     	{
     		if(!(c instanceof CartaEspecialComCor))
     			continue;
@@ -276,31 +213,15 @@ public class jogadorCarta extends Jogador{
     		CartaEspecialComCor ca = (CartaEspecialComCor)c;
     		
     		// Verifica se é a mesma cor ou se é a mesma ação pra poder jogar
-    		if(ca.getCor() == ultimo.getCor() || (ultimo instanceof CartaEspecialComCor && ca.getAcao() == ((CartaEspecialComCor)ultimo).getAcao()))
+    		if(ca.getCor() == corUltimaCarta || (ultimo instanceof CartaEspecialComCor && ca.getAcao() == acaoUltimaCarta))
     		{
     			return ca;
     		}
     	}
     	
-    	// Busca cartas normais
-    	for(Carta c : this.getMaoJogador().getCartas())
-    	{
-    		if(!(c instanceof CartaNormal))
-    			continue;
-    		
-    		CartaNormal cn = (CartaNormal)c;
-    		
-    		// Se for a mesma cor pode jogar
-    		if(cn.getCor() == ultimo.getCor())
-    			return c;
-    		
-    		// Se for o mesmo número também pode jogar
-    		if(ultimo instanceof CartaNormal && ((CartaNormal)ultimo).getNumero() == cn.getNumero())
-    			return c;
-    	}
     	
     	// Busca +4 e troca cor
-    	for(Carta c : this.getMaoJogador().getCartas())
+    	for(Carta c : this.maoJogador.getCartas())
     	{
     		if(!(c instanceof CartaEspecialSemCor))
     			continue;
@@ -315,6 +236,8 @@ public class jogadorCarta extends Jogador{
     }
 	
   
+    
+    
     public Jogada realizarJogada(){
         LOGGER.trace("Jogador {} realizando jogada", this.getNome());
         Carta carta = null;
@@ -361,11 +284,3 @@ public class jogadorCarta extends Jogador{
         return jogadaRealizada;
     }
 }
-
-
-
-
-
-
-
-
