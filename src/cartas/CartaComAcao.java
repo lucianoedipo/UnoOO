@@ -9,8 +9,6 @@ import acao.Acao;
  *
  */
 public abstract class CartaComAcao extends Carta {
-	
-	
 
 	// Acao do tipo Acao que vai vir do Grupo Ação:
 	// Muda desde Carta ou altera apenas aqui ?
@@ -25,25 +23,25 @@ public abstract class CartaComAcao extends Carta {
 	public final void setNumero(int n) throws CartaSemNumero {
 		throw new CartaSemNumero("Cartas de Ação não possuem número");
 	}
-	
+
 	@Override
-	public Acao getAcao()  {
+	public Acao getAcao() {
 		return this.acao;
 	}
-	
+
 	@Override
-	public void setAcao(Acao ac)  {
+	public void setAcao(Acao ac) {
 		this.acao = ac;
 	}
 
 	@Override
-	public Cor getCor()  {
+	public Cor getCor() {
 		return this.cor;
 	}
-	
+
 	@Override
-	public void setCor(Cor c)  {
-		 this.cor = c;
+	public void setCor(Cor c) {
+		this.cor = c;
 	}
-	
+
 }

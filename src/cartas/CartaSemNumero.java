@@ -1,16 +1,15 @@
 package cartas;
 
 /**
- * 
+ * SEM DESCR
  * @author grupo Cartas
  * 
  */
 
 public class CartaSemNumero extends Exception {
 
-	
 	private static final long serialVersionUID = 1L;
-	
+
 	public CartaSemNumero() {
 		// TODO Auto-generated constructor stub
 	}

@@ -11,10 +11,11 @@ import org.slf4j.LoggerFactory;
 import base.jogador.Jogador;
 
 /**
- * @author Autores: Daniel Schutz, Felipe Pellissari, Fernanda Pessoa e José
- *         Lucas. Classe destinada a inicializar a partida e verificar seu
- *         término, bem como preparar o jogo - instanciando o baralho inicial,
- *         jogadores e passando estes por parâmero a classe 'Roda'
+ * Classe destinada a inicializar a partida e verificar seu término, bem como
+ * preparar o jogo - instanciando o baralho inicial, jogadores e passando estes
+ * por parâmero a classe 'Roda'
+ * 
+ * @author Daniel Schutz, Felipe Pellissari, Fernanda Pessoa e José Lucas.
  */
 public class Jogo {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Jogo.class);

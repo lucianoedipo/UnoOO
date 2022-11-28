@@ -1,21 +1,25 @@
 package acao;
-import base.Jogo;
-import base.SimulUnoOO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+/**
+ * SEM DESCR
+ * COM WARN
+ * @author lucia
+ *
+ */
 public abstract class Acao {
-  protected static final Logger LOGGER = LoggerFactory.getLogger(Acao.class);
-  /**
-   * Método de funções de ação que precisam ser acumuladas.
-   */
-  public abstract void acaoAcumulada();
+	protected static final Logger LOGGER = LoggerFactory.getLogger(Acao.class);
 
-  /**
-   * Método de funções de ação que são executadas no mesmo momento.
-   */
-  public abstract void acaoInstantanea();
+	/**
+	 * Método de funções de ação que precisam ser acumuladas.
+	 */
+	public abstract void acaoAcumulada();
+
+	/**
+	 * Método de funções de ação que são executadas no mesmo momento.
+	 */
+	public abstract void acaoInstantanea();
 
 }
 
@@ -25,4 +29,3 @@ public abstract class Acao {
  * @version 5.0
  * @see Roda, Jogada
  */
- 

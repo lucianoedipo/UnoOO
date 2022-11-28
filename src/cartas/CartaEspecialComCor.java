@@ -9,19 +9,16 @@ import acao.Acao;
  *
  */
 public class CartaEspecialComCor extends CartaComAcao {
-	
-	
-	
 
 	/**
 	 * 
-	 * @param c do tipo Cor
+	 * @param c  do tipo Cor
 	 * @param ac do tipo Acao
 	 */
-	public CartaEspecialComCor(Cor c, Acao ac){
-		
+	public CartaEspecialComCor(Cor c, Acao ac) {
+
 		this.cor = c;
-		//super.setNumero(-1);
+		// super.setNumero(-1);
 		this.acao = ac;
 	}
 
@@ -48,6 +45,5 @@ public class CartaEspecialComCor extends CartaComAcao {
 		// TODO Auto-generated method stub
 		super.setAcao(ac);
 	}
-
 
 }

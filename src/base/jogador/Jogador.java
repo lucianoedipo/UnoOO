@@ -21,6 +21,12 @@ import cartas.CartaNormal;
 import cartas.CartaSemAcao;
 import cartas.Cor;
 
+/**
+ * SEM DESC
+ * 
+ * @author lucia
+ *
+ */
 public class Jogador {// implements Jogada{
 	protected static final Logger LOGGER = LoggerFactory.getLogger(Jogador.class);
 	protected String nome;
@@ -99,7 +105,6 @@ public class Jogador {// implements Jogada{
 	}
 
 	/**
-	 *
 	 * Compra uma lista de cartas, adicionando-as a maoJogador
 	 * 
 	 * @see MaoCartas
@@ -114,6 +119,7 @@ public class Jogador {// implements Jogada{
 	 *
 	 * Compra uma carta, adicionando uma carta a maoJogador,
 	 * 
+	 * @param carta ??
 	 * @see MaoCartas
 	 **/
 	// @Override
@@ -126,6 +132,8 @@ public class Jogador {// implements Jogada{
 	 *
 	 * Descarta uma carta, retirando uma carta de maoJogador, adicionando-a ao monte
 	 * de descarte
+	 * 
+	 * @param carta ??
 	 * 
 	 * @see MaoCartas
 	 **/
@@ -190,6 +198,9 @@ public class Jogador {// implements Jogada{
 	public Jogada realizarJogada() {
 		LOGGER.trace("Jogador {} realizando jogada", this.getNome());
 		Carta carta = null;
+		/**
+		 * Faz tratamento ERRRADO DE ACUMULO
+		 */
 		if (Jogo.roda.temAcumulo()) {
 			try {
 				carta = defineCartaParaAcumulo(Jogo.roda.getUltimaCarta().getAcao());

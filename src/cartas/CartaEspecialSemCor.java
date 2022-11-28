@@ -9,14 +9,15 @@ import acao.Acao;
  *
  */
 public class CartaEspecialSemCor extends CartaComAcao {
-	
+
 	/**
 	 * 
 	 * @param ac do tipo Acao
 	 */
-	public CartaEspecialSemCor(Acao ac){//Carta especial sem cor
+	public CartaEspecialSemCor(Acao ac) {// Carta especial sem cor
 		this.acao = ac;
 	}
+
 	@Override
 	public Cor getCor() {
 		return Cor.SEMCOR;

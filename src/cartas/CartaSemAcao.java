@@ -1,19 +1,19 @@
 package cartas;
 
 /**
+ * SEM DESCR
+ * 
  * @author grupo Cartas
  */
-public class CartaSemAcao extends Exception  {
+public class CartaSemAcao extends Exception {
 
-	
 	private static final long serialVersionUID = 1L;
 
 	public CartaSemAcao() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
+
 	/**
 	 * @param message
 	 * @param cause
@@ -24,7 +24,7 @@ public class CartaSemAcao extends Exception  {
 		super(message, cause, enableSuppression, writableStackTrace);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	/**
 	 * @param message
 	 * @param cause
@@ -41,7 +41,7 @@ public class CartaSemAcao extends Exception  {
 		super(message);
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	/**
 	 * @param cause
 	 */

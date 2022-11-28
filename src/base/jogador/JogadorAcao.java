@@ -10,7 +10,12 @@ import cartas.CartaEspecialSemCor;
 import cartas.CartaNormal;
 import cartas.CartaSemAcao;
 import cartas.Cor;
-
+/**
+ * SEM DESCR
+ * Não realizou override de realizarJogada()
+ * @author lucia
+ *
+ */
 public class JogadorAcao extends Jogador {
 	/**
 	 * Bot jogador, subclasse de jogador, implementado pelo grupo de Ação
